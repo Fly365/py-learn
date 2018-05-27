@@ -15,9 +15,13 @@ class Spider:
         headers = {"User-Agent":user_agent}
         req = urllib.request.Request(url,headers=headers)
         response = urllib.request.urlopen(req)
-        html = response.read().decode("utf-8")
+        #html = response.read().decode("utf-8")
+        # 如果原URL地址为gbk，输出为utf-8
+        #html = response.read().decode('gbk').encode("utf-8")
+        html = response.read().decode('gbk')
         return html
 
 if __name__ == "__main__":
     mySpider = Spider()
-    mySpider.loadPage(1)
+    html = mySpider.loadPage(1)
+    print(html)
