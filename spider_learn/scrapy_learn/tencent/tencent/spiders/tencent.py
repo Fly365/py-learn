@@ -1,12 +1,40 @@
 from ..items import TencentItem
 import scrapy
-import re
+from scrapy.spiders import CrawlSpider,Rule
+from scrapy.linkextractors import LinkExtractor
+
 
 class TencentSpider(scrapy.Spider):
     name = "tencent"
     allowed_domains = ["hr.tencent.com"]
     start_urls = ["http://hr.tencent.com/position.php?&start=0#a"]
 
+    page_1x = LinkExtractor(allow=("start=\d+"))
+    rules = [
+        Rule(page_1x, callback="parseContent", follow=True)
+    ]
+
+    def parseContent(self,response):
+        for each in response.xpath("//*[@class='even']"):
+            item = TencentItem()
+            name = each.xpath("./td[1]/a/text()").extract()[0]
+            detailLink = each.xpath("./td[1]/a/@href").extract()[0]
+            positionInfo = each.xpath("./td[2]/text()").extract()[0]
+            peopleNumber = each.xpath("./td[3]/text()").extract()[0]
+            workLocation = each.xpath("./td[4]/text()").extract()[0]
+            publishTime = each.xpath("./td[5]/text()").extract()[0]
+
+            item["name"] = name
+            item["detailLink"] = detailLink
+            item["positionInfo"] = positionInfo
+            item["peopleNumber"] = peopleNumber
+            item["workLocation"] = workLocation
+            item["publishTime"] = publishTime
+
+            yield item
+
+    # 使用上面逻辑，parse()方法不需要重写
+    '''
     def parse(self, response):
         for each in response.xpath("//*[@class='even']"):
             item = TencentItem()
@@ -33,4 +61,5 @@ class TencentSpider(scrapy.Spider):
 
             # 将获取的数据交给pipel
             yield item
+    '''
 

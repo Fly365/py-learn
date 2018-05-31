@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Scrapy settings for tencent project
+# Scrapy settings for zhihuSpider project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -9,14 +9,14 @@
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'tencent'
+BOT_NAME = 'zhihuSpider'
 
-SPIDER_MODULES = ['tencent.spiders']
-NEWSPIDER_MODULE = 'tencent.spiders'
+SPIDER_MODULES = ['zhihuSpider.spiders']
+NEWSPIDER_MODULE = 'zhihuSpider.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'tencent (+http://www.yourdomain.com)'
+#USER_AGENT = 'zhihuSpider (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -47,13 +47,13 @@ ROBOTSTXT_OBEY = True
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'tencent.middlewares.TencentSpiderMiddleware': 543,
+#    'zhihuSpider.middlewares.ZhihuspiderSpiderMiddleware': 543,
 #}
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    'tencent.middlewares.TencentDownloaderMiddleware': 543,
+#    'zhihuSpider.middlewares.ZhihuspiderDownloaderMiddleware': 543,
 #}
 
 # Enable or disable extensions
@@ -65,12 +65,8 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 #ITEM_PIPELINES = {
-#    'tencent.pipelines.TencentPipeline': 300,
+#    'zhihuSpider.pipelines.ZhihuspiderPipeline': 300,
 #}
-ITEM_PIPELINES = {
-    'tencent.pipelines.TencentPipeline': 300,
-}
-
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
@@ -92,7 +88,3 @@ ITEM_PIPELINES = {
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
-
-
-LOG_FILE = "TencentSpider.log"
-LOG_LEVEL = "INFO"
