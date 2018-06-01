@@ -52,6 +52,17 @@ class ZhihuSpider(CrawlSpider):
         for url in self.start_urls:
             yield self.make_requests_from_url(url)
 
+    def parse_page(self,response):
+        problem = Selector(response)
+        item = ZhihuspiderItem()
+        item["url"] = response.url
+        item["name"] = problem.xpath("//span[@class='name']/text()").extract()
+        print(item["name"])
+        item["title"] = problem.xpath("//h2[@class='zm-item-title zm-editable-content']/text()").extract()
+        item["description"] = problem.xpath("//div[@class='zm-editable-content']/text()").extract()
+        item["answer"] = problem.xpath("//div[@class='zm-editable-content clearfix']/text()").extract()
+        return item
+
 
 
 

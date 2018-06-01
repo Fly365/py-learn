@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Scrapy settings for zhihuSpider project
+# Scrapy settings for douyuSpider project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -9,38 +9,24 @@
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'zhihuSpider'
+BOT_NAME = 'douyuSpider'
 
-SPIDER_MODULES = ['zhihuSpider.spiders']
-NEWSPIDER_MODULE = 'zhihuSpider.spiders'
-DOWNLOAD_DELAY = 0.25   #设置下载间隔为250ms
-# HTTP status code is not handled or not allowed
-USER_AGENTS = [
-    "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0; .NET CLR 3.5.30729; .NET CLR 3.0.30729; .NET CLR 2.0.50727; Media Center PC 6.0)",
-    "Mozilla/5.0 (compatible; MSIE 8.0; Windows NT 6.0; Trident/4.0; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; .NET CLR 1.0.3705; .NET CLR 1.1.4322)",
-    "Mozilla/4.0 (compatible; MSIE 7.0b; Windows NT 5.2; .NET CLR 1.1.4322; .NET CLR 2.0.50727; InfoPath.2; .NET CLR 3.0.04506.30)",
-    "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN) AppleWebKit/523.15 (KHTML, like Gecko, Safari/419.3) Arora/0.3 (Change: 287 c9dfb30)",
-    "Mozilla/5.0 (X11; U; Linux; en-US) AppleWebKit/527+ (KHTML, like Gecko, Safari/419.3) Arora/0.6",
-    "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.2pre) Gecko/20070215 K-Ninja/2.1.1",
-    "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9) Gecko/20080705 Firefox/3.0 Kapiko/3.0",
-    "Mozilla/5.0 (X11; Linux i686; U;) Gecko/20070322 Kazehakase/0.4.5"
-]
+SPIDER_MODULES = ['douyuSpider.spiders']
+NEWSPIDER_MODULE = 'douyuSpider.spiders'
 
+ITEM_PIPELINES = {"douyuSpider.pipelines.ImagesPipeline":1}
+# img 存放位置，在pipelines.py里调用
+IMAGES_STORE = "./"
 
-PROXIES = [
-    {'ip_port': '111.8.60.9:8123', 'user_passwd': 'user1:pass1'},
-    {'ip_port': '101.71.27.120:80', 'user_passwd': 'user2:pass2'},
-    {'ip_port': '122.96.59.104:80', 'user_passwd': 'user3:pass3'},
-    {'ip_port': '122.224.249.122:8088', 'user_passwd': 'user4:pass4'},
-]
+#user agent
+USER_AGENT = 'DYZB/2.290 (iPhone; iOS 9.3.4; Scale/2.00)'
+
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'zhihuSpider (+http://www.yourdomain.com)'
+#USER_AGENT = 'douyuSpider (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-#ROBOTSTXT_OBEY = True
-# Forbidden by robots.txt
-ROBOTSTXT_OBEY = False
+ROBOTSTXT_OBEY = True
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -68,19 +54,14 @@ ROBOTSTXT_OBEY = False
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'zhihuSpider.middlewares.ZhihuspiderSpiderMiddleware': 543,
+#    'douyuSpider.middlewares.DouyuspiderSpiderMiddleware': 543,
 #}
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    'zhihuSpider.middlewares.ZhihuspiderDownloaderMiddleware': 543,
+#    'douyuSpider.middlewares.DouyuspiderDownloaderMiddleware': 543,
 #}
-DOWNLOADER_MIDDLEWARES = {
-    "zhihuSpider.middlewares.RandomUserAgent":1,
-    "zhihuSpider.middlewares.ProxyMiddleware":100
-}
-
 
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
@@ -91,7 +72,7 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 #ITEM_PIPELINES = {
-#    'zhihuSpider.pipelines.ZhihuspiderPipeline': 300,
+#    'douyuSpider.pipelines.DouyuspiderPipeline': 300,
 #}
 
 # Enable and configure the AutoThrottle extension (disabled by default)

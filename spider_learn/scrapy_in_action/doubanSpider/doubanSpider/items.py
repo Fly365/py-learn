@@ -6,14 +6,11 @@
 # https://doc.scrapy.org/en/latest/topics/items.html
 
 import scrapy
-from scrapy.item import Item,Field
 
-
-class ZhihuspiderItem(scrapy.Item):
+class DoubanspiderItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    url = Field()
-    title = Field()
-    description = Field()
-    answer = Field()
-    name = Field()
+    title = scrapy.Field()
+    score = scrapy.Field()
+    content = scrapy.Field()
+    info = scrapy.Field()
