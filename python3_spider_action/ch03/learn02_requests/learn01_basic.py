@@ -31,4 +31,30 @@ headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.80 Safari/537.36"
 }
 r = requests.get("https://www.zhihu.com/explore", headers=headers)
-pattern = re.compile("")
+pattern = re.compile("explore-feed.*?question_link.*?>(.*?)</a>", re.S)
+titles = re.findall(pattern, r.text)
+print(titles)
+
+# 获取二进制数据
+import requests
+r = requests.get("https://github.com/favicon.ico")
+print(r.text)
+print(r.content)
+# 存储
+with open("favicon.ico", "wb") as f:
+    f.write(r.content)
+
+# POST请求
+import requests
+data = {
+    "name": "jerry",
+    "age": 20
+}
+r = requests.post("http://httpbin.org/post", data=data)
+print(r.text)
+
+# requests内置状态码查询 requests.codes
+import requests
+r = requests.get("http://www.baidu.com")
+print(r.status_code)
+exit() if not r.status_code == requests.codes.ok else print("request successfully")
