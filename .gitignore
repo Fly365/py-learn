@@ -16,4 +16,8 @@
 /src/main/webapp/userfiles/*
 /target/
 *.pyc
+**/Include/*
+**/Lib/*
+**/Scripts/*
+*.cfg
 
