@@ -20,5 +20,5 @@
 **/Lib/*
 **/Scripts/*
 *.cfg
-**/venv/**
+**/*venv/**
 
