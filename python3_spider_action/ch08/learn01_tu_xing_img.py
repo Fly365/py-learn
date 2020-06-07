@@ -3,7 +3,7 @@ import tesserocr
 from PIL import Image
 
 image = Image.open('CheckCode.jpg')
-
+# 传入L可将图片转化为灰度图像，传入1可将图片二值化处理
 image = image.convert('L')
 threshold = 127
 table = []
