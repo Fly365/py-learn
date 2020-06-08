@@ -30,7 +30,7 @@ class CrackTouClick():
     def __del__(self):
         self.browser.close()
 
-    def oopen(self):
+    def open(self):
         """打开网页输入用户名密码"""
         self.browser.get(self.url)
         email = self.wait.until(EC.presence_of_element_located((By.ID, 'email')))
@@ -66,4 +66,76 @@ class CrackTouClick():
 
     def get_touclick_image(self, name='captcha.png'):
         """获取验证码图片"""
-        pass
+        top, bottom, left, right = self.get_position()
+        print("验证码位置", top, bottom, left, right)
+        screenshot = self.get_screenshot()
+        captcha = screenshot.crop(left, top, right, bottom)
+        captcha.save(name)
+        return captcha
+
+    def get_points(self, captcha_result):
+        """
+        解析识别结果
+        :param captcha_result: 识别结果
+        :return: 转化后的结果
+        """
+        groups = captcha_result.get('pic_str').split('|')
+        locations = [[int(number) for number in group.split(',')] for group in groups]
+        return locations
+
+    def touch_click_words(self, locations):
+        """
+        点击验证图片
+        :param locations: 点击位置
+        :return: None
+        """
+        for location in locations:
+            print(location)
+            ActionChains(self.browser).move_to_element_with_offset(self.get_touclick_element(),
+                                       location[0], location[1]).click().perform()
+            time.sleep(1)
+
+    def touch_click_verify(self):
+        """
+        点击验证按钮
+        :return: None
+        """
+        button = self.wait.until(EC.element_to_be_clickable((By.CLASS_NAME, 'touclick-pub-submit')))
+        button.click()
+
+    def login(self):
+        submit = self.wait.until(EC.element_to_be_clickable((By.ID, '_submit')))
+        submit.click()
+        time.sleep(10)
+        print('登录成功')
+
+    def crack(self):
+        """破解入口"""
+        self.open()
+        # 点击验证按钮
+        button = self.get_touclick_button()
+        button.click()
+        # 获取验证码图片
+        image = self.get_touclick_image()
+        bytes_array = BytesIO()
+        image.save(bytes_array, format='PNG')
+        # 识别验证码
+        result = self.chaojiying.post_pic(bytes_array.getvalue(), CHAOJIYING_KIND)
+        print(result)
+        locations = self.get_points(result)
+        self.touch_click_words(locations)
+        self.touch_click_verify()
+        # 判定是否成功
+        success = self.wait.until(
+            EC.text_to_be_present_in_element((By.CLASS_NAME, 'touclick-hod-note'), '验证成功'))
+        print(success)
+
+        # 失败后重试
+        if not success:
+            self.crack()
+        else:
+            self.login()
+
+if __name__ == '__main__':
+    crack = CrackTouClick()
+    crack.crack()
